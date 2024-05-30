@@ -1,0 +1,41 @@
+Матрица пример 
+3 4
+1 2 3 4
+5 6 -1 8
+9 10 11 12
+
+import numpy as np
+
+def find_min_in_row(row):
+  """Возвращает минимальный элемент в заданном векторе."""
+  return np.min(row)
+
+def find_product_in_column(column):
+  """Возвращает произведение ненулевых элементов в заданном векторе."""
+  product = 1
+  for element in column:
+    if element != 0:
+      product *= element
+  return product
+
+def main():
+  # Считать матрицу из файла
+  with open("matrix.txt", "r") as f:
+    A = np.loadtxt(f)
+
+  # Считать число k с клавиатуры
+  k = int(input("Введите номер строки: "))
+
+  # Найти минимальный элемент в k-ой строке
+  min_element = find_min_in_row(A[k - 1, :])
+
+  # Найти произведение ненулевых элементов в столбце, где находится минимальный элемент
+  column = A[:, np.where(A[k - 1, :] == min_element)[0][0]]
+  product = find_product_in_column(column)
+
+  # Вывести результаты
+  print(f"Минимальный элемент в {k}-ой строке: {min_element}")
+  print(f"Произведение ненулевых элементов в столбце, где находится минимальный элемент: {product}")
+
+if __name__ == "__main__":
+  main()
